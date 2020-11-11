@@ -1,0 +1,39 @@
+{
+  "name": "todo-node-mongodb",
+  "version": "1.0.0",
+  "description": "Todo App developed in Express and MongoDb with JWT authentication",
+  "main": "www",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "DEBUG=todo-node-mongo:* nodemon ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/someshsam/todo-node-mongodb.git"
+  },
+  "keywords": [
+    "todo",
+    "node",
+    "mongodb",
+    "jwt",
+    "express"
+  ],
+  "author": "Somesh NP",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/someshsam/todo-node-mongodb/issues"
+  },
+  "homepage": "https://github.com/someshsam/todo-node-mongodb#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.13",
+    "morgan": "~1.9.1"
+  }
+}
