@@ -1,5 +1,7 @@
 const express = require('express');
 const log = require('debug')('todo-node-mongo:server');
+const bcrypt = require('bcrypt');
+
 const generateToken = require('../helpers/generateToken');
 const Auth = require('../models/Auth');
 
@@ -9,7 +11,7 @@ console.log('')
 router.post('/signin', async (req, res) => {
     try {
         const userData = await Auth.findOne({ email: req.body.email });
-        if (!userData || req.body.email !== userData.email && req.body.password !== userData.password) {
+        if (!userData || req.body.email !== userData.email || !bcrypt.compareSync(req.body.password, userData.password)) {
             res.status(404).json({ message: 'Email or Password does not match' });
         } else {
             const { _id, email, password } = userData;
@@ -20,7 +22,6 @@ router.post('/signin', async (req, res) => {
         res.status(404).json({ message: error });
         log(error);
     }
-
 });
 
 /* Signup Router */
@@ -29,11 +30,12 @@ router.post('/signup', async (req, res) => {
     if (isUserExist) {
         return res.status(401).json({message: `User already exist with email id ${req.body.email}`})
     }
-
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = await bcrypt.hashSync(req.body.password, salt);
     const auth = new Auth({
         email: req.body.email,
-        password: req.body.password
-    })
+        password: hashedPassword
+    });
 
     try {
         const userData = await auth.save();
